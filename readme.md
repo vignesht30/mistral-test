@@ -1,4 +1,4 @@
-# Mistral AI: Advanced Implementation
+# Mistral AI: Simple Implementation
 ### Tool Calling, RAG, and Beyond
 
 This repository explores the capabilities of the Mistral AI API, focusing on building intelligent agents that can interact with external data and execute functional tools.
