@@ -1,0 +1,3 @@
+mistralai
+httpx
+python-dotenv
