@@ -110,13 +110,11 @@ class MistralClient:
 
             msg = res.choices[0].message
             print("==============================================")
-            print(f"printing msg ->>  {msg}")
+            print(msg)
             tool_calls = getattr(msg, "tool_calls", None) or []
 
-            ##### debugging start
             # Append assistant message exactly like cookbook does
             # (this preserves tool_calls in the assistant message)
-
             messages.append(
                 {
                     "role": "assistant",
@@ -137,9 +135,6 @@ class MistralClient:
             # Remove tool_calls key if none (cleaner payload)
             if messages[-1].get("tool_calls") is None:
                 messages[-1].pop("tool_calls", None)
-            ##### debugging end
-
-            # messages.append(res.choices[0].message) # works for no tool calling, when we put search ddg - error
 
             # If no tool calls, we're done
             if not tool_calls:
@@ -381,13 +376,18 @@ def system_prompt_docs() -> str:
     )
 
 def system_prompt_tools() -> str:
+    # return (
+    #     "You are a helpful assistant.\n"
+    #     "Use ONLY the provided context to answer.\n"
+    #     "If the context does not contain enough information, say what is missing.\n"
+    #     "Use tools when required."
+    #     "Do not invent citations."
+    # )
     return (
         "You are a helpful assistant.\n"
-        "Use ONLY the provided context to answer.\n"
-        "If the context does not contain enough information, say what is missing.\n"
-        "Cite sources like [Source 1], [Source 2] next to the claims they support.\n"
-        "Use tools when required."
-        "Do not invent citations."
+        "Use tools when needed.\n"
+        "After tool results are provided, answer in plain text.\n"
+        "Do NOT output citations, references, or source IDs.\n"
     )
 
 #####################################################################################
@@ -443,5 +443,3 @@ def main() ->  None:
 
 if __name__ == "__main__":
     main()
-
-
